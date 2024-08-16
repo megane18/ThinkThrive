@@ -89,7 +89,6 @@ export default function Generate() {
     }
   }
 
-
   return (
     <Container maxWidth="md">
       <Box sx={{ my: 4 }}>
@@ -108,10 +107,16 @@ export default function Generate() {
         />
         <Button
           variant="contained"
-          color="primary"
           onClick={handleSubmit}
           fullWidth
           disabled={isLoading}
+          sx={{ 
+            backgroundColor: '#000000', // Change the button color here
+            color: '#ffffff',
+            '&:hover': {
+              backgroundColor: '#000000', // Darken on hover
+            }
+          }}
         >
           {isLoading ? <CircularProgress size={24} /> : 'Generate Flashcards'}
         </Button>
@@ -141,7 +146,17 @@ export default function Generate() {
 
       {flashcards.length > 0 && (
         <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center' }}>
-          <Button variant="contained" color="primary" onClick={handleOpenDialog}>
+          <Button 
+            variant="contained" 
+            onClick={handleOpenDialog}
+            sx={{ 
+              backgroundColor: '#000000', // Change the button color here
+              color: '#ffffff',
+              '&:hover': {
+                backgroundColor: '#000000', // Darken on hover
+              }
+            }}
+          >
             Save Flashcards
           </Button>
         </Box>
@@ -165,7 +180,17 @@ export default function Generate() {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseDialog}>Cancel</Button>
-          <Button onClick={saveFlashcards} color="primary">
+          <Button 
+            onClick={saveFlashcards} 
+            color="primary"
+            sx={{ 
+              backgroundColor: '#388e3c', // Match the color of the "Save Flashcards" button
+              color: '#ffffff',
+              '&:hover': {
+                backgroundColor: '#2e7d32', // Darken on hover
+              }
+            }}
+          >
             Save
           </Button>
         </DialogActions>

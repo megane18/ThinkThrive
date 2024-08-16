@@ -1,6 +1,7 @@
 'use client';
 
 import React from "react";
+import { useRouter } from 'next/navigation';
 import { Box, Button, AppBar, Toolbar, Typography } from "@mui/material";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import ChatBox from "../components/ChatBox";
@@ -37,6 +38,7 @@ const theme = createTheme({
 });
 
 const FlashcardsPage = () => {
+  const router = useRouter();
   return (
     <ThemeProvider theme={theme}>
       <div >
@@ -57,7 +59,7 @@ const FlashcardsPage = () => {
             Turn your notes into interactive flashcards to help you study smarter.
           </Typography>
           <Box sx={{ mt: 4 }}>
-            <Button variant="contained" color="primary"  sx={{ mr: 2 }} onClick={()=> router.push("")}> 
+            <Button variant="contained" color="primary"  sx={{ mr: 2 }} onClick={()=> router.push("/generate")}> 
               Get Started
             </Button>
             <Button variant="outlined" color="primary">
