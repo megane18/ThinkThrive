@@ -53,7 +53,7 @@ const LandingPage = () => {
           </Typography>
           <IconButton
             component="a"
-            href="https://github.com/your-github-profile"
+            href="https://github.com/musabsarmadmir/ThinkThrive"
             target="_blank"
             rel="noopener noreferrer"
             color="inherit"
