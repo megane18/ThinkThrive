@@ -41,14 +41,16 @@ const FlashcardsPage = () => {
   const router = useRouter();
   return (
     <ThemeProvider theme={theme}>
-      <Container maxWidth="lg">
-        <AppBar position="static" color="primary">
+      <div>
+      <AppBar position="static" color="primary">
           <Toolbar>
             <Typography variant="h6" color="inherit">
               ThinkThrive
             </Typography>
           </Toolbar>
         </AppBar>
+      </div>
+      <Container maxWidth="lg">
         <ChatBox />
         {/* Hero Section */}
         <Box sx={{ textAlign: 'center', py: 10 }}>
