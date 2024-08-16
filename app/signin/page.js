@@ -36,7 +36,7 @@ const SignInPage = () => {
     event.preventDefault();
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      router.push('/pantry');
+      router.push('/flashcards');
     } catch (error) {
       let errorMessage = 'An error occurred. Please try again.';
       switch (error.code) {

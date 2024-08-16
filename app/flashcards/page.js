@@ -1,20 +1,45 @@
-import React from "react";
+'use client';
 
-export default function ChatBox({children}) { // Chatbox for flashcards
+import React from "react";
+import { AppBar, Toolbar, Typography } from "@mui/material";
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import ChatBox from "../components/ChatBox";
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#000000',
+      contrastText: '#ffffff',
+    },
+    secondary: {
+      main: '#e5e7eb',
+    },
+    background: {
+      default: '#000000',
+    },
+    text: {
+      primary: '#ffffff',
+      secondary: '#e5e7eb',
+    },
+  },
+});
+
+const FlashcardsPage = () => {
   return (
-    <main>
-      <div className="chat-box">
-        <div className="chat-box-header">
-          <h1>ThinkThrive</h1>
-        </div>
-        <div className="chat-box-body">
-            {children}
-        </div>
-        <div className="chat-box-footer">
-          <input type="text" placeholder="Enter Topic" />
-          <button type="submit">Send</button>
-        </div>
-      </div>
-    </main>
+    <ThemeProvider theme={theme}>
+      <div>
+      <AppBar position="static" color="primary">
+        <Toolbar>
+          <Typography variant="h6" color="inherit">
+            ThinkThrive
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <ChatBox />
+      {/* More content if needed */}
+    </div>
+    </ThemeProvider>
   );
-}
+};
+
+export default FlashcardsPage;

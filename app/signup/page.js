@@ -41,7 +41,7 @@ const SignUpPage = () => {
 
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-      router.push('/flashcards'); // Redirect to pantry page after sign up
+      router.push('/flashcards');
     } catch (error) {
       let errorMessage = 'An error occurred. Please try again.';
       switch (error.code) {
