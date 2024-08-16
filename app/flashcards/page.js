@@ -22,6 +22,18 @@ const theme = createTheme({
       secondary: '#e5e7eb',
     },
   },
+  typography: {
+    fontFamily: 'Calibri, sans-serif', 
+    h3: {
+      fontWeight: 700,
+    },
+    h4: {
+      fontWeight: 700,
+    },
+    h5: {
+      fontWeight: 400,
+    },
+  },
 });
 
 const FlashcardsPage = () => {
@@ -37,22 +49,22 @@ const FlashcardsPage = () => {
         </AppBar>
         <ChatBox />
         {/* Hero Section */}
-      <Box sx={{ textAlign: 'center', py: 10 }}>
-        <Typography variant="h2" component="h1" gutterBottom>
-          Create Flashcards in Seconds
-        </Typography>
-        <Typography variant="h5" color="text.secondary" gutterBottom>
-          Turn your notes into interactive flashcards to help you study smarter.
-        </Typography>
-        <Box sx={{ mt: 4 }}>
-          <Button variant="contained" color="primary"  sx={{ mr: 2 }}>
-            Get Started
-          </Button>
-          <Button variant="outlined" color="primary">
-            Learn More
-          </Button>
+        <Box sx={{ textAlign: 'center', py: 10 }}>
+          <Typography variant="h2" component="h1" gutterBottom>
+            Welcome to ThinkThrive
+          </Typography>
+          <Typography variant="h5" color="text.secondary" gutterBottom>
+            Turn your notes into interactive flashcards to help you study smarter.
+          </Typography>
+          <Box sx={{ mt: 4 }}>
+            <Button variant="contained" color="primary"  sx={{ mr: 2 }} onClick={()=> router.push("")}> 
+              Get Started
+            </Button>
+            <Button variant="outlined" color="primary">
+              Learn More
+            </Button>
+          </Box>
         </Box>
-      </Box>
     </div>
     </ThemeProvider>
   );
