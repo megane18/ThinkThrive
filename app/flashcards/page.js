@@ -169,6 +169,7 @@
 
 import React, { useEffect } from "react";
 import { useRouter } from 'next/navigation';
+import getStripe from "@/utils/get-stripe";
 import { Grid, Container, Box, Button, AppBar, Toolbar, Typography, Card, CardContent } from "@mui/material";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import ChatBox from "../components/ChatBox";
@@ -210,6 +211,23 @@ const theme = createTheme({
     },
   },
 });
+
+const handleSubmit = async () => {
+  const checkoutSession = await fetch('/api/checkout_sessions', {
+    method: 'POST',
+    headers: { origin: 'http://localhost:3000' },
+  })
+  const checkoutSessionJson = await checkoutSession.json()
+
+  const stripe = await getStripe()
+  const {error} = await stripe.redirectToCheckout({
+    sessionId: checkoutSessionJson.id,
+  })
+
+  if (error) {
+    console.warn(error.message)
+  }
+}
 
 const FlashcardsPage = () => {
   const router = useRouter();
@@ -286,11 +304,11 @@ const FlashcardsPage = () => {
                   Get Started
                 </Button>
               </motion.div>
-              <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} style={{ display: 'inline-block' }}>
+              {/* <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} style={{ display: 'inline-block' }}>
                 <Button variant="outlined" color="primary">
                   Learn More
                 </Button>
-              </motion.div>
+              </motion.div> */}
             </Box>
           </Box>
           {/* Features Section */}
@@ -320,7 +338,7 @@ const FlashcardsPage = () => {
             </Grid>
           </Box>
           {/* Pricing Section */}
-          <Box sx={{ py: 10 }} data-aos="fade-up">
+          <Box sx={{ py: 10 }} data-aos="fade-up" textAlign="center">
             <Typography variant="h4" component="h2" textAlign="center" gutterBottom>
               Pricing
             </Typography>
@@ -339,8 +357,8 @@ const FlashcardsPage = () => {
                   title="Pro Plan"
                   description="Advanced features for serious students."
                   price="$9.99/mo"
-                  buttonText="Sign Up"
-                  link="/signup"
+                  buttonText="Get Pro"
+                  link="/result"
                 />
               </Grid>
               <Grid item xs={12} md={4} data-aos="flip-up" data-aos-delay="200">

@@ -729,6 +729,7 @@ export default function Generate() {
       setFlashcards(data.flashcards)
       setFlippedCards({})
       setSelectedSet(null)
+      setText('') // Clear the text field after generating flashcards
       setSnackbarMessage('Flashcards generated successfully!')
       setSnackbarOpen(true)
     } catch (error) {
