@@ -223,22 +223,36 @@ const FlashcardsPage = () => {
   }, []);
 
   const handleSubmit = async () => {
-    const checkoutSession = await fetch('/api/checkout_session', {
-      method: 'POST',
-      headers: { origin: 'http://localhost:3000' },
-    })
-    const checkoutSessionJson = await checkoutSession.json()
+    try {
+      console.log('Starting handleSubmit');
+      const response = await fetch('/api/checkout_session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+      });
   
-    const stripe = await getStripe()
-    const {error} = await stripe.redirectToCheckout({
-      sessionId: checkoutSessionJson.id,
-    })
+      console.log('Response status:', response.status);
+      const data = await response.json();
+      console.log('Response data:', data);
   
-    if (error) {
-      console.warn(error.message)
+      if (!response.ok) {
+        throw new Error(data.error?.message || 'Failed to create checkout session');
+      }
+  
+      if (!data.url) {
+        throw new Error('No URL returned from the server');
+      }
+  
+      console.log('Redirecting to:', data.url);
+      // Use window.open for debugging purposes
+      window.open(data.url, '_blank');
+      
+      // Alternatively, you can use:
+      // window.location.href = data.url;
+    } catch (err) {
+      console.error('Error in handleSubmit:', err);
+      alert('An error occurred. Please try again.');
     }
-  }
-
+  };
   const FeatureCard = ({ title, description }) => (
     <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
       <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column', boxShadow: '0 4px 8px rgba(0,0,0,0.1)' }}>
@@ -254,7 +268,7 @@ const FlashcardsPage = () => {
     </motion.div>
   );
 
-  const PricingCard = ({ title, description, price, buttonText, link }) => (
+  const PricingCard = ({ title, description, price, buttonText, link, onClick }) => (
     <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
       <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column', boxShadow: '0 4px 8px rgba(0,0,0,0.1)' }}>
         <CardContent>
@@ -267,7 +281,7 @@ const FlashcardsPage = () => {
           <Typography variant="h4" component="p" gutterBottom sx={{ mt: 2, color: 'primary.main' }}>
             {price}
           </Typography>
-          <Button variant="contained" color="secondary" href={link} sx={{ mt: 2 }}>
+          <Button variant="contained" color="secondary"  onClick={onClick} href={link} sx={{ mt: 2 }}>
             {buttonText}
           </Button>
         </CardContent>
@@ -359,6 +373,7 @@ const FlashcardsPage = () => {
                   price="$9.99/mo"
                   buttonText="Get Pro"
                   link="/result"
+                  onClick={handleSubmit}
                 />
               </Grid>
               <Grid item xs={12} md={4} data-aos="flip-up" data-aos-delay="200">
