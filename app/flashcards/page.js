@@ -223,7 +223,7 @@ const FlashcardsPage = () => {
   }, []);
 
   const handleSubmit = async () => {
-    const checkoutSession = await fetch('/api/checkout_sessions', {
+    const checkoutSession = await fetch('/api/checkout_session', {
       method: 'POST',
       headers: { origin: 'http://localhost:3000' },
     })

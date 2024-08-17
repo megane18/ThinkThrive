@@ -1,9 +1,8 @@
-// /app/result/page.js
-
 'use client';
 
 import React, { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import getStripe from '@/utils/get-stripe';
 import { Container, Typography, CircularProgress, Box } from '@mui/material';
 
 const ResultPage = () => {
@@ -18,7 +17,7 @@ const ResultPage = () => {
     const fetchCheckoutSession = async () => {
       if (!session_id) return;
       try {
-        const res = await fetch(`/api/checkout_sessions?session_id=${session_id}`);
+        const res = await fetch(`/api/checkout_session?session_id=${session_id}`);
         const sessionData = await res.json();
         
         if (res.ok) {
@@ -27,6 +26,7 @@ const ResultPage = () => {
           setError(sessionData.error.message || 'An error occurred while retrieving the session.');
         }
       } catch (err) {
+        console.log(err)
         setError('An error occurred while retrieving the session.');
       } finally {
         setLoading(false);
