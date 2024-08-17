@@ -212,23 +212,6 @@ const theme = createTheme({
   },
 });
 
-const handleSubmit = async () => {
-  const checkoutSession = await fetch('/api/checkout_sessions', {
-    method: 'POST',
-    headers: { origin: 'http://localhost:3000' },
-  })
-  const checkoutSessionJson = await checkoutSession.json()
-
-  const stripe = await getStripe()
-  const {error} = await stripe.redirectToCheckout({
-    sessionId: checkoutSessionJson.id,
-  })
-
-  if (error) {
-    console.warn(error.message)
-  }
-}
-
 const FlashcardsPage = () => {
   const router = useRouter();
 
@@ -238,6 +221,23 @@ const FlashcardsPage = () => {
       once: true,
     });
   }, []);
+
+  const handleSubmit = async () => {
+    const checkoutSession = await fetch('/api/checkout_sessions', {
+      method: 'POST',
+      headers: { origin: 'http://localhost:3000' },
+    })
+    const checkoutSessionJson = await checkoutSession.json()
+  
+    const stripe = await getStripe()
+    const {error} = await stripe.redirectToCheckout({
+      sessionId: checkoutSessionJson.id,
+    })
+  
+    if (error) {
+      console.warn(error.message)
+    }
+  }
 
   const FeatureCard = ({ title, description }) => (
     <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
