@@ -102,14 +102,14 @@ const LandingPage = () => {
 
   const linkedInProfiles = [
     { name: "Megane Alexis", url: "https://www.linkedin.com/in/megane-alexis/" },
-    { name: "Musab", url: "https://www.linkedin.com/in/musabsarmad" },
+    { name: "Musab Sarmad", url: "https://www.linkedin.com/in/musabsarmad" },
     { name: "Nareen Asad", url: "https://www.linkedin.com/in/nareen-asad" },
     { name: "Kafai Lei", url: "https://www.linkedin.com/in/kafailei/" },
   ];
 
   const gitHubProfiles = [
     { name: "Megane Alexis", url: "https://github.com/megane18" },
-    { name: "Musab", url: "https://github.com/musabsarmadmir" },
+    { name: "Musab Sarmad", url: "https://github.com/musabsarmadmir" },
     { name: "Nareen Asad", url: "https://github.com/nareenasad" },
     { name: "Kafai Lei", url: "https://github.com/will15800" },
     
