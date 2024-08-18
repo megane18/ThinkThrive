@@ -26,6 +26,49 @@ export async function GET(req) {
     return NextResponse.json({ error: { message: error.message } }, { status: 500 });
   }
 }
+// export async function POST(req) {
+//   try {
+//     const origin = req.headers.get('origin') || req.headers.get('referer') || 'http://localhost:3000';
+//     console.log('Origin:', origin);
+
+//     const params = {
+//       mode: 'subscription',
+//       payment_method_types: ['card'],
+//       line_items: [
+//         {
+//           price_data: {
+//             currency: 'usd',
+//             product_data: {
+//               name: 'Pro subscription',
+//             },
+//             unit_amount: 1000, // $10.00 in cents
+//             recurring: {
+//               interval: 'month',
+//               interval_count: 1,
+//             },
+//           },
+//           quantity: 1,
+//         },
+//       ],
+//       success_url: `${origin}/result?session_id={CHECKOUT_SESSION_ID}`,
+//       cancel_url: `${origin}/result?session_id={CHECKOUT_SESSION_ID}`,
+      
+//     };
+//     console.log('Success URL:', params.success_url);
+//     console.log('Cancel URL:', params.cancel_url);
+
+//     const checkoutSession = await stripe.checkout.sessions.create(params);
+//     console.log('Stripe checkout session created:', checkoutSession);
+
+//     return NextResponse.json({
+//       id: checkoutSession.id,
+//       url: checkoutSession.url
+//     });
+//   } catch (error) {
+//     console.error('Error creating checkout session:', error);
+//     return NextResponse.json({ error: { message: error.message } }, { status: 500 });
+//   }
+// }
 
 export async function POST(req) {
   try {
@@ -52,21 +95,14 @@ export async function POST(req) {
         },
       ],
       success_url: `${origin}/result?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${origin}/result?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${origin}/result?session_id={CHECKOUT_SESSION_ID}&status=canceled`,
+      ui_mode: 'hosted',
     };
     console.log('Success URL:', params.success_url);
-console.log('Cancel URL:', params.cancel_url);
-
-
-    //console.log('Creating Stripe checkout session with params:', params);
+    console.log('Cancel URL:', params.cancel_url);
 
     const checkoutSession = await stripe.checkout.sessions.create(params);
     console.log('Stripe checkout session created:', checkoutSession);
-
-    console.log('Returning response:', {
-      id: checkoutSession.id,
-      url: checkoutSession.url
-    });
 
     return NextResponse.json({
       id: checkoutSession.id,

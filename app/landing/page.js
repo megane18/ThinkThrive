@@ -101,19 +101,17 @@ const LandingPage = () => {
   };
 
   const linkedInProfiles = [
-    { name: "LinkedIn Profile 1", url: "https://www.linkedin.com/in/profile1" },
-    { name: "LinkedIn Profile 2", url: "https://www.linkedin.com/in/profile2" },
-    { name: "LinkedIn Profile 3", url: "https://www.linkedin.com/in/profile3" },
-    { name: "LinkedIn Profile 4", url: "https://www.linkedin.com/in/profile4" },
-    { name: "Fake LinkedIn 1", url: "https://www.linkedin.com/in/fakelink1" },
-    { name: "Fake LinkedIn 2", url: "https://www.linkedin.com/in/fakelink2" },
+    { name: "Megane Alexis", url: "https://www.linkedin.com/in/megane-alexis/" },
+    { name: "Musab", url: "https://www.linkedin.com/in/musabsarmad" },
+    { name: "Nareen Asad", url: "https://www.linkedin.com/in/nareen-asad" },
+    { name: "Kafai Lei", url: "https://www.linkedin.com/in/kafailei/" },
   ];
 
   const gitHubProfiles = [
     { name: "Megane Alexis", url: "https://github.com/megane18" },
-    { name: "Musab", url: "https://github.com/profile2" },
-    { name: "Nareen Asad", url: "https://github.com/profile3" },
-    { name: "Kafai Lei", url: "https://github.com/profile4" },
+    { name: "Musab", url: "https://github.com/musabsarmadmir" },
+    { name: "Nareen Asad", url: "https://github.com/nareenasad" },
+    { name: "Kafai Lei", url: "https://github.com/will15800" },
     
   ];
 
@@ -152,13 +150,14 @@ const LandingPage = () => {
             minHeight="80vh"
             textAlign="center"
           >
-            <Typography variant="h3" component="h1" gutterBottom>
+            <Typography variant="h3"  component="h1" gutterBottom sx={{mt: '10px',  color: '#C06014'}}  >
               ThinkThrive
             </Typography>
-            <Typography variant="h4" component="h2" gutterBottom sx={{ marginBottom: '16px' }}>
+            <Typography variant="h5" component="h2" gutterBottom sx={{ marginBottom: '16px', mt: '10px', color: '#5D5D5D', fontWeight: 'bold' }}>
               Your ultimate learning tool.
             </Typography>
-            <Typography variant="h5" paragraph sx={{ maxWidth: '600px', mx: 'auto', marginBottom: '24px' }}>
+            <Typography variant="h5" paragraph sx={{ maxWidth: '600px', mx: 'auto', mt: '10px'
+             }}>
               No longer any need for staying up till 3am to study. ThinkThrive is here to help you learn more efficiently.
             </Typography>
             <Button 

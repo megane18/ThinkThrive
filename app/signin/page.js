@@ -98,7 +98,7 @@ const SignInPage = () => {
             textAlign="center"
           >
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-              <Typography variant="h4" component="h1" gutterBottom>
+              <Typography variant="h4" component="h1" gutterBottom fontWeight='bold'>
                 Sign In
               </Typography>
             </motion.div>

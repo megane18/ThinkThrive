@@ -4,24 +4,36 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { Box, Button, Container, Typography, TextField, AppBar, Toolbar, CssBaseline } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { auth } from '../../firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../firebase';
 
+// Updated theme with warm colors from FlashcardsPage
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#000000',
+      main: '#C06014', // Warm primary color from FlashcardsPage
       contrastText: '#ffffff',
     },
     secondary: {
-      main: '#e5e7eb',
+      main: '#F9A03F', // Warm secondary color from FlashcardsPage
     },
     background: {
-      default: '#000000',
+      default: '#F1F0EA', // Background color from FlashcardsPage
     },
     text: {
-      primary: '#ffffff',
-      secondary: '#e5e7eb',
+      primary: '#3C3C3C', // Text color from FlashcardsPage
+      secondary: '#5D5D5D', // Secondary text color from FlashcardsPage
+    },
+  },
+  typography: {
+    fontFamily: '"Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+    h4: {
+      fontWeight: 700,
+      color: '#3C3C3C',
+    },
+    h5: {
+      fontWeight: 400,
+      color: '#5D5D5D',
     },
   },
 });
@@ -68,27 +80,31 @@ const SignUpPage = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <AppBar position="static" color="primary">
+      <AppBar position="static" color="transparent" elevation={0}>
         <Toolbar>
-          <Typography variant="h6" color="inherit">
+          <Typography variant="h6" color="primary" sx={{ fontWeight: 'bold' }}>
             ThinkThrive
           </Typography>
         </Toolbar>
       </AppBar>
-      <Container maxWidth="xs">
+      <Container maxWidth="xs" >
         <Box
           display="flex"
           flexDirection="column"
           alignItems="center"
           justifyContent="center"
-          minHeight="80vh"
+          minHeight="60vh"
+          gap={8}
+          mt={14}
           textAlign="center"
+          sx={{ backgroundColor: theme.palette.background.default, p: 2, borderRadius: 2, boxShadow: 3 }}
         >
           <Typography variant="h4" component="h1" gutterBottom>
             Sign Up
           </Typography>
           <Box component="form" onSubmit={handleSignUp} noValidate sx={{ mt: 1 }}>
             <TextField
+            
               margin="normal"
               required
               fullWidth
@@ -149,7 +165,7 @@ const SignUpPage = () => {
               type="submit"
               fullWidth
               variant="contained"
-              color="secondary"
+              color="primary" // Warm primary color
               sx={{ mt: 3, mb: 2 }}
             >
               Sign Up
@@ -157,7 +173,7 @@ const SignUpPage = () => {
             <Button
               fullWidth
               variant="text"
-              color="secondary"
+              color="primary" // Warm primary color
               onClick={handleSignIn}
             >
               Already have an account? Sign In
@@ -168,5 +184,6 @@ const SignUpPage = () => {
     </ThemeProvider>
   );
 };
+
 export { auth };
 export default SignUpPage;
