@@ -3,8 +3,10 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { Container, Typography, CircularProgress, Box, Button } from '@mui/material';
+import { Container, Typography, CircularProgress, Box, Button, Paper } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import PendingIcon from '@mui/icons-material/Pending';
 
 const theme = createTheme({
   palette: {
@@ -48,8 +50,7 @@ const ResultPage = () => {
   const [session, setSession] = useState(null);
   const [error, setError] = useState(null);
 
-  // Fallback to hardcoded session ID if not in URL
-  const session_id = searchParams.get('session_id') || "cs_live_a1njKdRaUFRG0housOvFeHG7JDpWei6o8xtMJMp16y2KqRQsiFm2P0r7rL";
+  const session_id = searchParams.get('session_id') || process.env.NEXT_PUBLIC_DEFAULT_SESSION_ID;
   const status = searchParams.get('status');
 
   useEffect(() => {
@@ -69,6 +70,16 @@ const ResultPage = () => {
     };
     fetchCheckoutSession();
   }, [session_id]);
+
+  useEffect(() => {
+    if (session && session.payment_status === 'paid') {
+      const timer = setTimeout(() => {
+        router.push('/flashcards');
+      }, 7000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [session, router]);
 
   if (loading) {
     return (
@@ -124,13 +135,14 @@ const ResultPage = () => {
           </Typography>
           <Box sx={{ mt: 5 }}>
             <Button variant="contained" color="primary" component={Link} href="/">
-              Return to LoginPage</Button>
+              Return to LoginPage
+            </Button>
           </Box>
           <Box sx={{ mt: 5 }}>
             <Button variant="contained" color="primary" component={Link} href="/flashcards">
-            Return to HomePage
+              Return to HomePage
             </Button>
-            </Box>
+          </Box>
         </Container>
       </ThemeProvider>
     );
@@ -138,134 +150,40 @@ const ResultPage = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container maxWidth="sm" sx={{ textAlign: 'center', mt: 4 }}>
-        {session.payment_status === 'paid' ? (
-          <>
-            <Typography variant="h4" gutterBottom>
-              Thank you for your purchase!
-            </Typography>
-            <Box sx={{ mt: 2 }}>
-              <Typography variant="h6">Session ID: {session_id}</Typography>
-              <Typography variant="body1" sx={{ mt: 2 }}>
-                We have received your payment. You will receive an email with the order details shortly.
+      <Container maxWidth="sm" sx={{ textAlign: 'center', mt: 8 }}>
+        <Paper elevation={3} sx={{ p: 4, borderRadius: 2, backgroundColor: theme.palette.background.paper }}>
+          {session.payment_status === 'paid' ? (
+            <>
+              <CheckCircleOutlineIcon sx={{ fontSize: 60, color: theme.palette.primary.main, mb: 2 }} />
+              <Typography variant="h4" gutterBottom sx={{ color: theme.palette.primary.main }}>
+                Thank you for your purchase!
               </Typography>
-            </Box>
-          </>
-        ) : session.status === 'open' ? (
-          <>
-            <Typography variant="h4" gutterBottom>
-              Complete Your Payment
-            </Typography>
-            <Box sx={{ mt: 2 }}>
-              <Typography variant="body1" sx={{ mt: 2 }}>
-                Your payment is pending...
+              <Box sx={{ mt: 3 }}>
+                <Typography variant="body1" sx={{ mt: 2, color: theme.palette.text.secondary }}>
+                  We have received your payment. You will receive an email with the order details shortly.
+                </Typography>
+                <Typography variant="body2" sx={{ mt: 2, color: theme.palette.text.secondary }}>
+                  You will be redirected to the flashcards page in 7 seconds...
+                </Typography>
+              </Box>
+            </>
+          ) : session.status === 'open' ? (
+            <>
+              <PendingIcon sx={{ fontSize: 60, color: theme.palette.primary.main, mb: 2 }} />
+              <Typography variant="h4" gutterBottom sx={{ color: theme.palette.primary.main }}>
+                Complete Your Payment
               </Typography>
-            </Box>
-          </>
-        ) : null}
+              <Box sx={{ mt: 3 }}>
+                <Typography variant="body1" sx={{ mt: 2, color: theme.palette.text.secondary }}>
+                  Your payment is pending. Please complete the payment process to access your purchase.
+                </Typography>
+              </Box>
+            </>
+          ) : null}
+        </Paper>
       </Container>
     </ThemeProvider>
   );
 };
 
 export default ResultPage;
-
-// 'use client';
-
-// import React, { useState, useEffect } from 'react';
-// import { useRouter, useSearchParams } from 'next/navigation';
-// import getStripe from '@/utils/get-stripe';
-// import { Container, Typography, CircularProgress, Box } from '@mui/material';
-
-// const ResultPage = () => {
-//   const router = useRouter();
-//   // Comment out or remove the line that extracts session_id from the URL
-//   // const searchParams = useSearchParams();
-//   // const session_id = searchParams.get('session_id');
-
-//   // Use the hardcoded session ID
-//   const session_id = "cs_live_a1njKdRaUFRG0housOvFeHG7JDpWei6o8xtMJMp16y2KqRQsiFm2P0r7rL";
-
-//   const [loading, setLoading] = useState(true);
-//   const [session, setSession] = useState(null);
-//   const [error, setError] = useState(null);
-
-//   useEffect(() => {
-//     const fetchCheckoutSession = async () => {
-//       if (!session_id) return;
-//       try {
-//         const res = await fetch(`/api/checkout_session?session_id=${session_id}`);
-//         const sessionData = await res.json();
-        
-//         if (res.ok) {
-//           setSession(sessionData);
-//         } else {
-//           setError(sessionData.error.message || 'An error occurred while retrieving the session.');
-//         }
-//       } catch (err) {
-//         console.log(err)
-//         setError('An error occurred while retrieving the session.');
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
-//     fetchCheckoutSession();
-//   }, [session_id]);
-
-//   if (loading) {
-//     return (
-//       <Container maxWidth="sm" sx={{ textAlign: 'center', mt: 4 }}>
-//         <CircularProgress />
-//         <Typography variant="h6" sx={{ mt: 2 }}>
-//           Loading...
-//         </Typography>
-//       </Container>
-//     );
-//   }
-
-//   if (error) {
-//     return (
-//       <Container maxWidth="sm" sx={{ textAlign: 'center', mt: 4 }}>
-//         <Typography variant="h6" color="error">
-//           {error}
-//         </Typography>
-//       </Container>
-//     );
-//   }
-
-//   return (
-//     <Container maxWidth="sm" sx={{ textAlign: 'center', mt: 4 }}>
-//       {session.payment_status === 'paid' ? (
-//         <>
-//           <Typography variant="h4" gutterBottom>
-//             Thank you for your purchase!
-//           </Typography>
-//           <Box sx={{ mt: 2 }}>
-//             <Typography variant="h6">Session ID: {session_id}</Typography>
-//             <Typography variant="body1" sx={{ mt: 2 }}>
-//               We have received your payment. You will receive an email with the order details shortly.
-//             </Typography>
-//           </Box>
-//         </>
-//       ) : (
-//         <>
-//           <Typography variant="h4" gutterBottom color="error">
-//             Payment failed
-//           </Typography>
-//           <Box sx={{ mt: 2 }}>
-//             <Typography variant="body1" color="text.secondary">
-//               Your payment was not successful. Please try again.
-//             </Typography>
-//           </Box>
-//         </>
-//       )}
-//       <Box sx={{ mt: 4 }}>
-//         <Typography variant="body1">
-//           <a href="/" onClick={() => router.push('/')}>Return to Home</a>
-//         </Typography>
-//       </Box>
-//     </Container>
-//   );
-// };
-
-// export default ResultPage;

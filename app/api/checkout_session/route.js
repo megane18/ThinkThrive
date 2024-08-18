@@ -2,7 +2,7 @@ import Stripe from "stripe";
 import { NextResponse } from "next/server";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-    apiVersion: '2022-11-15',
+    apiVersion: '2023-10-16',
 });
 
 export async function GET(req) {
@@ -85,7 +85,7 @@ export async function POST(req) {
             product_data: {
               name: 'Pro subscription',
             },
-            unit_amount: 1000, // $10.00 in cents
+            unit_amount: 500, // $10.00 in cents
             recurring: {
               interval: 'month',
               interval_count: 1,
