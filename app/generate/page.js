@@ -270,7 +270,7 @@ export default function Generate() {
             router.push('/flashcards')
             handleMenuClose()
           }}>
-            Flashcards
+            Home Page
           </MenuItem>
           <MenuItem onClick={handleLogout}>Logout</MenuItem>
         </Menu>

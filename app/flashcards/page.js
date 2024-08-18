@@ -203,7 +203,7 @@ const FlashcardsPage = () => {
                 <PricingCard
                   title="Pro Plan"
                   description="Advanced features for serious students."
-                  price="$9.99/mo"
+                  price="$10.00/mo"
                   buttonText="Get Pro"
                   onClick={handleSubmit}
                   // link="/result"
