@@ -601,7 +601,7 @@ const FlashcardsPage = () => {
           <DialogTitle id="free-plan-dialog-title">{"Free Plan Information"}</DialogTitle>
           <DialogContent>
             <DialogContentText id="free-plan-dialog-description">
-              You are currently using the free plan. There's no need to sign up again. Do you want to upgrade your plan?
+              You are currently using the free plan. There&apos;s no need to sign up again. Do you want to upgrade your plan?
             </DialogContentText>
           </DialogContent>
           <DialogActions>
